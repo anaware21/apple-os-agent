@@ -9,6 +9,10 @@ Phase 1: prints qualifying inbound messages.
 Later phases replace the body of handle() with: route -> extract -> act -> reply.
 """
 
+import sys
+import os
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 import time
 
 import config
