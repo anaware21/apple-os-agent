@@ -1,0 +1,27 @@
+# --- Secrets: NEVER commit these ---
+config.py
+.env
+*.key
+*.pem
+
+# --- Virtual environment ---
+venv/
+.venv/
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.egg-info/
+.Python
+
+# --- Logs / runtime ---
+logs/
+*.log
+
+# --- macOS ---
+.DS_Store
+
+# --- Editors / IDEs ---
+.vscode/
+.idea/
+*.swp
