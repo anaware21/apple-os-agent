@@ -17,7 +17,7 @@ import time
 
 import config
 from agent import reader
-# from agent import sender    # uncomment in Phase 2
+from agent import sender
 
 
 def is_allowed(msg) -> bool:
@@ -45,8 +45,7 @@ def handle(msg):
     print(f"[{when}] task from {msg['sender']}: {request!r}  (rowid={msg['rowid']})", flush=True)
 
     # ---- Phase 2+: reply ----
-    # reply = "got it"                     # later: route -> extract -> act
-    # sender.send(msg["sender"], reply)
+    sender.send(msg["sender"], "hello")
 
 
 if __name__ == "__main__":
