@@ -1,0 +1,75 @@
+# --- Secrets: NEVER commit these ---
+config.py
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+*.p12
+*.cer
+credentials.json
+token.json
+secrets/
+
+# --- Message data (personal) ---
+# Copies of chat.db or exported messages used for testing
+*.db
+*.db-wal
+*.db-shm
+*.sqlite
+*.sqlite3
+
+# --- Virtual environment ---
+venv/
+.venv/
+env/
+ENV/
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+*.egg
+.eggs/
+.Python
+build/
+dist/
+pip-wheel-metadata/
+
+# --- Testing / tooling caches ---
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+.ipynb_checkpoints/
+
+# --- Logs / runtime ---
+logs/
+*.log
+*.pid
+nohup.out
+
+# --- macOS ---
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+.fseventsd
+.TemporaryItems
+Icon?
+
+# --- Editors / IDEs ---
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.claude/

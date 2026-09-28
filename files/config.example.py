@@ -36,5 +36,7 @@ COMMAND_PREFIX = "/ask"
 # Routing (used from Phase 3 onward)
 # ----------------------------------------------------------------------------
 # Cosine-similarity cutoff: messages whose best task match scores below this are
-# treated as conversation and ignored. Tune once the router exists.
-ROUTER_THRESHOLD = 0.45
+# treated as conversation and ignored. On the router's lexical TF-IDF scale,
+# real commands typically score >= 0.18 and ordinary chatter <= 0.12; raise this
+# if the agent over-triggers, lower it if it ignores valid commands.
+ROUTER_THRESHOLD = 0.15

@@ -18,6 +18,32 @@ import time
 import config
 from agent import reader
 from agent import sender
+from agent.router import Router
+
+# Placeholder task registry — replaced by agent/registry.py in a later phase.
+# Each task lists example phrases a user might text to invoke it. Short trigger
+# stems ("remind me to") match well even when the rest of the message is words
+# the router has never seen ("...take out the trash").
+TASKS = {
+    "calendar": [
+        "what's on my calendar today",
+        "do I have any meetings tomorrow",
+        "when is my next event",
+        "check my calendar",
+        "what's my schedule",
+    ],
+    "reminder": [
+        "remind me to call mom at 5pm",
+        "set a reminder for tomorrow morning",
+        "add buy groceries to my reminders",
+        "remind me to",
+        "set a reminder",
+    ],
+}
+
+router = Router(threshold=config.ROUTER_THRESHOLD)
+for task_name, examples in TASKS.items():
+    router.register(task_name, examples)
 
 
 def is_allowed(msg) -> bool:
@@ -41,11 +67,17 @@ def handle(msg):
     request = strip_prefix(msg["text"] or "")
     when = time.strftime("%H:%M:%S", time.localtime(msg["time"])) if msg["time"] else "??:??:??"
 
-    # ---- Phase 1: just print ----
-    print(f"[{when}] task from {msg['sender']}: {request!r}  (rowid={msg['rowid']})", flush=True)
+    # ---- Phase 3: route ----
+    match = router.route(request)
+    if match is None:
+        # Below threshold: just conversation, ignore silently.
+        print(f"[{when}] no task matched from {msg['sender']}: {request!r}", flush=True)
+        return
+    task_name, score = match
+    print(f"[{when}] task {task_name!r} ({score:.2f}) from {msg['sender']}: {request!r}  (rowid={msg['rowid']})", flush=True)
 
-    # ---- Phase 2+: reply ----
-    sender.send(msg["sender"], "hello")
+    # ---- Phase 4+: extract -> act; for now just acknowledge the routed task ----
+    sender.send(msg["sender"], f"routed to task: {task_name} (score {score:.2f})")
 
 
 if __name__ == "__main__":
